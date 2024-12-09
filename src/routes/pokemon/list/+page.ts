@@ -32,8 +32,23 @@ async function fetchPokemon({
 		throw new Error('Failed to fetch Pokémon data');
 	}
 	const jsonData = await response.json();
+
+	const itemsWithImages = await Promise.all(
+		jsonData.results.map(async (pokemon: { name: string; url: string }) => {
+			const pokemonResponse = await fetch(pokemon.url);
+			if (!pokemonResponse.ok) {
+				throw new Error(`Failed to fetch Pokémon details for ${pokemon.name}`);
+			}
+			const pokemonData = await pokemonResponse.json();
+			return {
+				name: pokemon.name,
+				image: pokemonData.sprites.front_default
+			};
+		})
+	);
+
 	return {
-		items: jsonData.results
+		items: itemsWithImages
 	};
 }
 
