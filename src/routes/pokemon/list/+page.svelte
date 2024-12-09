@@ -10,23 +10,8 @@
 	<ol>
 		{#each value.items as item}
 			<li>
-				<a href={`/pokemon/info/${item.name}`} class="pokemon-link">
-					<img src={item.image} alt={item.name} width="50" height="50" />
-					{item.name}
-				</a>
+				<a href={`/pokemon/info/${item.name}`} class="pokemon-link">{item.name}</a>
 			</li>
 		{/each}
 	</ol>
 {/await}
-
-<!-- {#if data.error}
-	<p>Error loading Pokémon: {data.error}</p>
-{:else}
-	<ul>
-		{#each data.items as item}
-			<li>
-				<a href={`/pokemon/info/${item.name}`} class="pokemon-link">{item.name}</a>
-			</li>
-		{/each}
-	</ul>
-{/if} -->
