@@ -1,4 +1,6 @@
-export async function load() {
+import type { PageLoad } from './$types';
+
+export const load: PageLoad = async ({ fetch, params }) => {
 	try {
 		const response = await fetch('https://pokeapi.co/api/v2/pokemon/?limit=20000');
 		if (!response.ok) {
@@ -15,4 +17,4 @@ export async function load() {
 			error: error.message
 		};
 	}
-}
+};

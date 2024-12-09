@@ -1,4 +1,6 @@
-export async function load({ params }) {
+import type { PageLoad } from './$types';
+
+export const load: PageLoad = async ({ fetch, params }) => {
 	const { slug } = params;
 	try {
 		const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${slug}`);
@@ -14,4 +16,4 @@ export async function load({ params }) {
 			error: error.message
 		};
 	}
-}
+};
