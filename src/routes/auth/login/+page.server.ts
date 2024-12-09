@@ -1,4 +1,5 @@
 import { fail } from '@sveltejs/kit';
+import * as jose from 'jose';
 
 export const actions = {
 	login: async ({ request }) => {
@@ -26,7 +27,10 @@ export const actions = {
 			const data = await response.json();
 
 			if (response.ok) {
-				return { success: true, token: data.token };
+				const secretKey = new TextEncoder().encode('your-secret-key');
+				const { payload } = await jose.jwtVerify(data.token, secretKey);
+
+				return { success: true, claims: payload };
 			} else {
 				return fail(400, { error: 'Invalid credentials' });
 			}
