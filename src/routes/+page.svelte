@@ -1,1 +1,1 @@
-<a href="/list">asd</a>
+<a href="/pokemon/list">asd</a>

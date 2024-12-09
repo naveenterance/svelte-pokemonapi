@@ -11,7 +11,7 @@
 	<ul>
 		{#each data.items as item}
 			<li>
-				<a href={`/${item.name}`} class="pokemon-link">{item.name}</a>
+				<a href={`/pokemon/info/${item.name}`} class="pokemon-link">{item.name}</a>
 			</li>
 		{/each}
 	</ul>
