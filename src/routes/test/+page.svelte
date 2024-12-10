@@ -15,7 +15,7 @@
 					const pokemonDetails = await fetch(pokemon.url).then((res) => res.json());
 					return {
 						name: pokemon.name,
-						image: pokemonDetails.sprites.front_default // Pokémon image URL
+						image: pokemonDetails.sprites.front_default
 					};
 				})
 			);
@@ -38,7 +38,7 @@
 		const scrollTop = event.target.scrollTop; // Current scroll position
 		const clientHeight = event.target.clientHeight; // Visible part of the element
 
-		const isNearBottom = scrollHeight - scrollTop <= clientHeight * 3;
+		const isNearBottom = scrollHeight - scrollTop <= clientHeight * 4;
 
 		if (isNearBottom && !loading) {
 			fetchMore();
@@ -83,14 +83,5 @@
 		display: flex;
 		align-items: center;
 		padding: 10px;
-	}
-	li img {
-		margin-right: 10px;
-	}
-	.pagination {
-		margin-top: 20px;
-	}
-	button {
-		margin: 0 10px;
 	}
 </style>

@@ -1,5 +1,3 @@
-import type { PageLoad } from './$types';
-
 async function fetchPokemon({
 	fetch
 }: {
@@ -25,7 +23,7 @@ async function fetchPokemon({
 	};
 }
 
-export const load: PageLoad = async ({ fetch }) => {
+export const load = async ({ fetch }) => {
 	return {
 		streamed: { pokemon: fetchPokemon({ fetch }) }
 	};

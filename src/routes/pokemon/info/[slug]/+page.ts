@@ -1,5 +1,3 @@
-import type { PageLoad } from './$types';
-
 async function fetchPokemon({
 	fetch,
 	slug
@@ -15,7 +13,7 @@ async function fetchPokemon({
 	return { pokemon: jsonData };
 }
 
-export const load: PageLoad = async ({ fetch, params }) => {
+export const load = async ({ fetch, params }) => {
 	const { slug } = params;
 
 	return {
