@@ -10,8 +10,18 @@ async function fetchPokemon({
 		throw new Error('Failed to fetch Pokémon data');
 	}
 	const jsonData = await response.json();
+	const itemsWithImages = jsonData.results.map(
+		(pokemon: { name: string; url: string }, index: number) => {
+			const id = index + 1;
+			const image = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`;
+			return {
+				...pokemon,
+				image
+			};
+		}
+	);
 	return {
-		items: jsonData.results
+		items: itemsWithImages
 	};
 }
 

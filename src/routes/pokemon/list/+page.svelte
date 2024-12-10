@@ -10,6 +10,7 @@
 	<ol>
 		{#each value.items as item}
 			<li>
+				<img src={item.image} alt={item.name} width="50" height="50" />
 				<a href={`/pokemon/info/${item.name}`} class="pokemon-link">{item.name}</a>
 			</li>
 		{/each}
