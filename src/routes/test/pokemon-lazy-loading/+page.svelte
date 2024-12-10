@@ -28,7 +28,7 @@
 	}
 
 	const fetchMore = () => {
-		limit += 20; // Increase the limit by 20
+		limit += 40; // Increase the limit by 20
 		fetchPokemon(); // Fetch new set of Pokémon
 	};
 
