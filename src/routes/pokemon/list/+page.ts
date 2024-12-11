@@ -1,14 +1,15 @@
 async function fetchPokemon({
 	fetch,
 	limit,
-	offset
+	offset = 0
 }: {
 	fetch: (input: RequestInfo | URL, init?: RequestInit | undefined) => Promise<Response>;
 	limit: number;
-	offset: number;
+	offset?: number;
 }) {
-	const response = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=${limit}&offset=${offset}`);
-
+	const response = await fetch(
+		`https://pokeapi.co/api/v2/pokemon/?limit=${limit}&offset=${offset}`
+	);
 	if (!response.ok) {
 		throw new Error('Failed to fetch Pokémon data');
 	}
@@ -28,9 +29,12 @@ async function fetchPokemon({
 	};
 }
 
-export const load = async ({ fetch }) => {
+export const load = async ({ fetch, url }) => {
+	const limitParam = url.searchParams.get('limit');
+	const limit = limitParam ? parseInt(limitParam, 10) : 20;
+
 	return {
-		pokemon: await fetchPokemon({ fetch, limit: 20, offset: 0 }),
-		streamed: { pokemon: fetchPokemon({ fetch, limit: 20000, offset: 20 }) }
+		limit,
+		pokemon: await fetchPokemon({ fetch, limit })
 	};
 };
