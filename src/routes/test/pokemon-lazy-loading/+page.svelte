@@ -38,7 +38,7 @@
 		const scrollTop = event.target.scrollTop; // Current scroll position
 		const clientHeight = event.target.clientHeight; // Visible part of the element
 
-		const isNearBottom = scrollHeight - scrollTop <= clientHeight * 4;
+		const isNearBottom = scrollHeight - scrollTop <= clientHeight * 100;
 
 		if (isNearBottom && !loading) {
 			fetchMore();

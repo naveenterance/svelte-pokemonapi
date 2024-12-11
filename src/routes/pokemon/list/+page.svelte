@@ -31,27 +31,28 @@
 	}
 </script>
 
-<h1>Pokemon</h1>
+<!-- <h1>Pokemon</h1>
 
 {#if loading}
 	<p>Loading...</p>
-{:else}
-	<ul on:scroll={onScroll}>
-		{#each data.pokemon.items as item}
-			<li>
-				<img src={item.image} alt={`Sprite of ${item.name}`} width="50" height="50" />
-				<a href={`/pokemon/info/${item.name}`} class="pokemon-link">{item.name}</a>
-			</li>
-		{/each}
-	</ul>
-	<button on:click={loadMore} disabled={loading}>
+{:else} -->
+<ul on:scroll={onScroll}>
+	{#each data.pokemon.items as item}
+		<li>
+			<img src={item.image} alt={`Sprite of ${item.name}`} width="50" height="50" />
+			<a href={`/pokemon/info/${item.name}`} class="pokemon-link">{item.name}</a>
+		</li>
+	{/each}
+</ul>
+
+<!-- <button on:click={loadMore} disabled={loading}>
 		{loading ? 'Loading...' : 'Load More'}
 	</button>
-{/if}
+{/if} -->
 
 <style>
 	ul {
-		max-height: 600px;
+		height: 100vh;
 		overflow-y: auto;
 		list-style: none;
 		padding: 0;
