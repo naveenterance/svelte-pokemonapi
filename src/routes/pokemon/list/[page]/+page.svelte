@@ -9,7 +9,7 @@
 		if (loading) return;
 		loading = true;
 		limit += 10;
-		goto(`?limit=${limit}`).then(() => (loading = false));
+		goto(`${limit}`).then(() => (loading = false));
 	}
 	$inspect(loading);
 

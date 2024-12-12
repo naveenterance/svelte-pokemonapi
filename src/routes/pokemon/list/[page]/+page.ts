@@ -1,6 +1,6 @@
 async function fetchPokemon({
 	fetch,
-	limit,
+	limit = 30,
 	offset = 0
 }: {
 	fetch: (input: RequestInfo | URL, init?: RequestInit | undefined) => Promise<Response>;
@@ -29,8 +29,8 @@ async function fetchPokemon({
 	};
 }
 
-export const load = async ({ fetch, url }) => {
-	const limitParam = url.searchParams.get('limit');
+export const load = async ({ fetch, params }) => {
+	const limitParam = params.page;
 	const limit = limitParam ? parseInt(limitParam, 10) : 20;
 
 	return {
