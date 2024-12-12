@@ -23,7 +23,7 @@
 		const scrollTop = container.scrollTop; // Current scroll position
 		const clientHeight = container.clientHeight; // Visible part of the container
 
-		const isNearBottom = scrollHeight - scrollTop <= clientHeight * 1;
+		const isNearBottom = scrollHeight - scrollTop <= clientHeight;
 
 		if (isNearBottom && !loading) {
 			loadMore();
@@ -36,14 +36,21 @@
 {#if loading}
 	<p>Loading...</p>
 {:else} -->
-<ul on:scroll={onScroll}>
-	{#each data.pokemon.items as item}
-		<li>
-			<img src={item.image} alt={`Sprite of ${item.name}`} width="50" height="50" />
-			<a href={`/pokemon/info/${item.name}`} class="pokemon-link">{item.name}</a>
-		</li>
-	{/each}
-</ul>
+
+{#await data.pokemon}
+	<p>Loading...</p>
+{:then value}
+	<ul on:scroll={onScroll}>
+		{#each value.items as item}
+			<li>
+				<img src={item.image} alt={`Sprite of ${item.name}`} width="50" height="50" />
+				<a href={`/pokemon/info/${item.name}`} class="pokemon-link">{item.name}</a>
+			</li>
+		{/each}
+	</ul>
+{/await}
+
+<svelte:window />
 
 <!-- <button on:click={loadMore} disabled={loading}>
 		{loading ? 'Loading...' : 'Load More'}

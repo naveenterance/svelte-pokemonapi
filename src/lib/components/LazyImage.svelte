@@ -1,12 +1,10 @@
 <script>
-	import { onMount } from 'svelte';
+	let { src, alt, height, width } = $props();
 
-	export let src;
-	export let alt = '';
-	let loaded = false;
-	let imageRef;
+	let loaded = $state(false);
+	let imageRef = $state();
 
-	onMount(() => {
+	$effect(() => {
 		const observer = new IntersectionObserver(([entry]) => {
 			if (entry.isIntersecting) {
 				loaded = true;
@@ -24,15 +22,8 @@
 
 <div class="image-wrapper" bind:this={imageRef}>
 	{#if loaded}
-		<img {src} {alt} />
+		<img {src} {alt} {height} {width} />
 	{:else}
 		<p>Loading...</p>
 	{/if}
 </div>
-
-<style>
-	img {
-		width: 100;
-		height: 100;
-	}
-</style>
