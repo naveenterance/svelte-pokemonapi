@@ -1,8 +1,14 @@
-import { fail } from '@sveltejs/kit';
+import { fail, redirect } from '@sveltejs/kit';
 import * as jose from 'jose';
 
+export const load = async ({ locals }) => {
+	return {
+		user: locals.user
+	};
+};
+
 export const actions = {
-	login: async ({ request }) => {
+	login: async ({ request, cookies }) => {
 		const formData = await request.formData();
 		const name = formData.get('name');
 		const password = formData.get('password');
@@ -29,8 +35,17 @@ export const actions = {
 			if (response.ok) {
 				const secretKey = new TextEncoder().encode('your-secret-key');
 				const { payload } = await jose.jwtVerify(data.token, secretKey);
-
-				return { success: true, claims: payload };
+				if (payload) {
+					cookies.set('auth', 'regularusertoken', {
+						path: '/',
+						httpOnly: true,
+						sameSite: 'strict',
+						maxAge: 60 * 60 * 24 * 7
+					});
+					throw redirect(303, '/');
+				} else {
+					return fail(400, { error: 'Token error' });
+				}
 			} else {
 				return fail(400, { error: 'Invalid credentials' });
 			}
