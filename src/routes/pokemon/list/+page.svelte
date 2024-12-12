@@ -1,29 +1,25 @@
 <script>
 	import { goto } from '$app/navigation';
-	export let data;
+	const { data } = $props();
 
-	let limit = data.limit;
-	let loading = false; // Track if a load operation is in progress
+	let limit = $state(data.limit);
+	let loading = $state(false);
 
-	// Function to load more Pokémon
 	function loadMore() {
-		if (loading) return; // Prevent multiple concurrent loads
+		if (loading) return;
 		loading = true;
 		limit += 10;
-
-		// Use `goto` to update the URL and trigger data fetching
-		goto(`?limit=${limit}`);
-		loading = false;
+		goto(`?limit=${limit}`).then(() => (loading = false));
 	}
+	$inspect(loading);
 
-	// Handle scroll events for infinite scrolling
 	function onScroll(event) {
 		const container = event.target;
-		const scrollHeight = container.scrollHeight; // Total height of the content
-		const scrollTop = container.scrollTop; // Current scroll position
-		const clientHeight = container.clientHeight; // Visible part of the container
+		const scrollHeight = container.scrollHeight;
+		const scrollTop = container.scrollTop;
+		const clientHeight = container.clientHeight;
 
-		const isNearBottom = scrollHeight - scrollTop <= clientHeight;
+		const isNearBottom = scrollHeight - scrollTop <= clientHeight * 1;
 
 		if (isNearBottom && !loading) {
 			loadMore();
@@ -31,31 +27,18 @@
 	}
 </script>
 
-<!-- <h1>Pokemon</h1>
-
 {#if loading}
-	<p>Loading...</p>
-{:else} -->
+	<h1 class="absolute top-20">Loading ------</h1>
+{/if}
 
-{#await data.pokemon}
-	<p>Loading...</p>
-{:then value}
-	<ul on:scroll={onScroll}>
-		{#each value.items as item}
-			<li>
-				<img src={item.image} alt={`Sprite of ${item.name}`} width="50" height="50" />
-				<a href={`/pokemon/info/${item.name}`} class="pokemon-link">{item.name}</a>
-			</li>
-		{/each}
-	</ul>
-{/await}
-
-<svelte:window />
-
-<!-- <button on:click={loadMore} disabled={loading}>
-		{loading ? 'Loading...' : 'Load More'}
-	</button>
-{/if} -->
+<ul onscroll={onScroll}>
+	{#each data.pokemon.items as item}
+		<li>
+			<img src={item.image} alt={`Sprite of ${item.name}`} width="50" height="50" />
+			<a href={`/pokemon/info/${item.name}`} class="pokemon-link">{item.name}</a>
+		</li>
+	{/each}
+</ul>
 
 <style>
 	ul {
